@@ -56,3 +56,68 @@ The Application should support following features.
 - Each tour item should be wrapped in a html tag with class name=<b>"single-tour"</b>. The info, price of each tour are wrapped in a html tag with class = <b>"tour-info"</b> and <b>"tour-price"</b> respectively
 - Loading text should be wrapped in a html tag with class name= <b>"loading"</b>
 - When all the tours are deleted the refresh button should have a class <b>"btn"</b>
+
+
+
+import React, { useEffect, useState } from "react";
+
+const App = () => {
+  const [data, setData] = useState([])
+  
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/todos/')
+      .then(response => response.json())
+      .then(json => setData(json))
+  },[])
+  console.log(data)
+    return(
+      <main id="main">
+        {data.map((item,index) => (
+          <p>{item.title}</p>
+        ))}
+      </main>
+    )
+}
+export default App;
+
+
+//// import React, { useEffect, useState } from 'react'
+
+const App = () => {
+  const [data, setData] = useState([])
+  const [text, setText] = useState("")
+
+  const dataFetch = () => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(res => res.json())
+      .then(json => setData(json))
+      .catch(err => console.log(err))
+  }
+
+
+  // console.log(Array.isArray(data))
+
+
+  useEffect(() => {
+    dataFetch()
+  }, [])
+
+  const handleChange = (e) => {
+    setText((e.target.value))
+  }
+
+  const filterData = data.filter((item, index) => (
+    item.name.toLowerCase().includes(text.toLowerCase())
+  ))
+  console.log("fillett dataaa", filterData)
+  return (
+    <div>
+      <input type="text" value={text} onChange={handleChange} />
+      {filterData.map((item, index) => (
+        <li key={index} >{item.name}</li>
+      ))}
+    </div>
+  )
+}
+
+export default App
