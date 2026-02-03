@@ -55,7 +55,10 @@ const App = () => {
               {readMore[item.id]
                 ? item.info
                 : item.info.substring(0, 200)}
-              <button onClick={() => toggleReadMore(item.id)}>
+              <button
+                id={`see-more-${item.id}`}
+                onClick={() => toggleReadMore(item.id)}
+              >
                 {readMore[item.id] ? "show less" : "show more"}
               </button>
             </p>
